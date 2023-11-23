@@ -64,15 +64,13 @@ print(f'agg_item:{agg_item}')
 data.add_(1)
 
 
-
-
-x = torch.full((3,),10)
+x = torch.full((3,), 10)
 w = torch.ones(3, requires_grad=True)
 b = torch.ones(3, requires_grad=True)
 
 y = x * w + b
 print(y.shape, w.grad)
-y1=y[:2]
+y1 = y[:2]
 y1 = y1.sum()
 y1.backward()
 print(w.grad)
