@@ -71,7 +71,7 @@ def col2img(matrix_tensor: torch.Tensor, out_channel, h, w, k=3):
     feature_map = matrix_tensor.reshape(r, h, w)
     return feature_map
 
-# (O, C, H, W) -> (O, C*H*W)
+# (O, C, K, K) -> (O, C*K*K)
 
 
 def trans_conv2d(conv: torch.Tensor):

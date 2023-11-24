@@ -12,14 +12,14 @@
 #### 1.2.1 数据
 - 数据集
 
-|                             数据集                              |                                        文件                                        |                                        benchmark                                         |
-| :-------------------------------------------------------------: | :--------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------: |
-|           [MNIST](http://yann.lecun.com/exdb/mnist/)            |                                                                                    |                                                                                          |
-| [FashinMNIST](https://github.com/zalandoresearch/fashion-mnist) | [benchmark](https://paperswithcode.com/sota/image-classification-on-fashion-mnist) |                                                                                          |
-|     [Cifar10](https://www.cs.toronto.edu/~kriz/cifar.html)      |                                                                                    |      [benchmark](https://paperswithcode.com/sota/image-classification-on-cifar-10)       |
-|          [COCO](https://cocodataset.org/#format-data)           |                  [file](/home/renjie/renjie_ws/dataset/COCO2017)                   |          [benchmark](https://paperswithcode.com/sota/object-detection-on-coco)           |
-|        [kitti](https://paperswithcode.com/dataset/kitti)        |                                                                                    |                                                                                          |
-|              [nuscenes](https://www.nuscenes.org/)              |           [file](/home/renjie/renjie_ws/dataset/nuscenes/data/v1.0-mini)           | [benchmark](https://paperswithcode.com/sota/3d-object-detection-on-nuscenes-camera-only) |
+|                            数据集                            |                             文件                             |                          benchmark                           |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|          [MNIST](http://yann.lecun.com/exdb/mnist/)          |                                                              |                                                              |
+| [FashinMNIST](https://github.com/zalandoresearch/fashion-mnist) |                                                              | [benchmark](https://paperswithcode.com/sota/image-classification-on-fashion-mnist) |
+|    [Cifar10](https://www.cs.toronto.edu/~kriz/cifar.html)    |                                                              | [benchmark](https://paperswithcode.com/sota/image-classification-on-cifar-10) |
+|         [COCO](https://cocodataset.org/#format-data)         |       [file](/home/renjie/renjie_ws/dataset/COCO2017)        | [benchmark](https://paperswithcode.com/sota/object-detection-on-coco) |
+|      [kitti](https://paperswithcode.com/dataset/kitti)       |                                                              |                                                              |
+|            [nuscenes](https://www.nuscenes.org/)             | [file](/home/renjie/renjie_ws/dataset/nuscenes/data/v1.0-mini) | [benchmark](https://paperswithcode.com/sota/3d-object-detection-on-nuscenes-camera-only) |
 
 - [Dataset & Dataloader](https://yiyan.baidu.com/share/CBuUUXkDTU)
 > 从库(`torchvision`,`torchaudio`,`torchtext`)中加载数据集<br>
@@ -52,6 +52,7 @@
 > [常见归一化层](https://blog.csdn.net/weixin_43570470/article/details/124043037)<br>
 > [归一化通俗理解]( https://yiyan.baidu.com/share/IybijX30zX) <br>
 > **batch_norm**  **layer_norm** instance_norm group_norm
+
 - [池化层(pooling)](https://pytorch.org/docs/stable/nn.html#pooling-layers)
 > [常见池化层图示](https://zhuanlan.zhihu.com/p/77040467)<br>
 > [池化层通俗理解]( https://yiyan.baidu.com/share/9GywU6CZXG)
@@ -60,28 +61,65 @@
 > [dropout图示](https://zhuanlan.zhihu.com/p/390990848?utm_id=0)<br>
 > [将dropout理解为集成学习]( https://yiyan.baidu.com/share/63qP4PxYQ0 )
 
-- 卷积(convolution)
+- [卷积(convolution)](https://pytorch.org/docs/stable/nn.html#convolution-layers)
 > [普通卷积图示](https://blog.csdn.net/m0_47005029/article/details/129270974)<br>
 > [各式卷积](https://blog.51cto.com/u_14439393/5945930) [各式卷积](https://blog.csdn.net/m0_62919535/article/details/131317667?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-131317667-blog-129270974.235%5Ev38%5Epc_relevant_anti_t3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-3-131317667-blog-129270974.235%5Ev38%5Epc_relevant_anti_t3&utm_relevant_index=6)<br>
-> 怎么实现高效卷积计算
+> 怎么实现高效卷积计算<br>
+> [分组卷积,深度卷积,深度可分离卷积3D动画](https://www.bilibili.com/video/BV12h4y1s7RY/?spm_id_from=333.337.search-card.all.click)
 
-- attention
-- transformer
+- [Attention](https://pytorch.org/docs/stable/generated/torch.nn.MultiheadAttention.html#torch.nn.MultiheadAttention)
+> [单头注意力](https://u5rpni.axshare.com/?id=q3erh9&p=self-attention&g=1&sc=3)<br>
+> [多头注意力](https://u5rpni.axshare.com/?id=4ak987&p=multi-head-attention&g=1&sc=3)<br>
 
-        attention
-        deformable attention
+- [Transformer](https://zhuanlan.zhihu.com/p/114497616)<br>
+ Transfomer就是带有attention机制的一种encoder-decoder模型
+
+- 可形变机制
+> [deformable 卷积](https://zhuanlan.zhihu.com/p/138020203)<br>
+> [deformable attention](https://blog.csdn.net/charles_zhang_/article/details/127934444)
 
 
-#### 1.2.3 损失函数
+#### 1.2.3 [损失函数](https://zhuanlan.zhihu.com/p/603339901)
+衡量模型输出与真实标签的差距
+> [api接口](https://pytorch.org/docs/stable/nn.html#loss-functions)<br>
+> 信息量 熵 相对熵(KL散度) 交叉熵 <br>
+> 交叉熵损失函数 二分类损失函数 L1Loss  MSELoss
 
 #### 1.2.4 优化器
+管理并更新模型中的可学习的参数,使得loss减小
+> [梯度下降](https://zhuanlan.zhihu.com/p/113714840?ivk_sa=1024320u&utm_id=0)<br>
+> [随机梯度下降](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning/blob/main/3%20-%20Chapter%206%20Stochastic%20Approximation.pdf)<br>
+> [常用优化算法](https://zhuanlan.zhihu.com/p/658973246?utm_id=0)<br>
+![img.png](res/img.png)
 
 #### 1.2.4 训练迭代,加载,保存和可视化
+> [saving & loading](https://pytorch.org/tutorials/beginner/basics/saveloadrun_tutorial.html)<br>
+> [CAPTUM](https://pytorch.org/tutorials/recipes/recipes/Captum_Recipe.html)<br>
+> [可视化工具 tensorboard](https://pytorch.org/tutorials/recipes/recipes/tensorboard_with_pytorch.html)<br>
+
+#### 性能优化与部署
+> [量化(QUantization)](https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html) 模型量化是一种将深度学习模型中的浮点数参数和计算操作转换为定点数参数和计算操作的过程。这种技术可以有效地**降低模型计算强度、参数大小和内存消耗**，但往往带来巨大的精度损失。在深度学习中，模型量化主要用于神经网络的训练和部署阶段
 
 ### 1.3 [quickstart](https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html)
 
 ## 2. 分类任务
+- [ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
+- [卷积网络](https://blog.csdn.net/weixin_45897172/article/details/128330887)
+> LeNet <br>
+> AlexNet <br>
+> VGG <br>
+> GoogLeNet <br>
+> [ResNet](https://blog.csdn.net/daweq/article/details/127540449) <br>
+> [mobilenet](https://blog.csdn.net/ManiacLook/article/details/123230896)
+
+- transformer网络
+> ViT ([file](/home/renjie/Desktop/paper/self-attention/\(VIT) An Image is Worth 16x16 Words, Transformers for Image Recognition at Scale.pdf))<br>
+> Swin ([file](/home/renjie/Desktop/paper/self-attention/\(Swin Transformer): Hierarchical Vision Transformer using Shifted Windows.pdf))
+
 ## 3. 目标检测、语义分割和实例分割
+
 ## 4. Lidar感知与预测模型
+
 ## 5. BEV
+
 ## 6. PNC和E-E探索

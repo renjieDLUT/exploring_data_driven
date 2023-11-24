@@ -65,7 +65,7 @@ class MyMultiHeadAttention(nn.Module):
 
         attn = (q @ k.transpose(-1, -2)) * self.scale  # (bs, nh, length, length)
         attn = attn.softmax(dim=-1)
-        att = (attn @ v).transpose(1, 2).reshape(bs, length, self.dim)  # (bs, length, dim)
+        att = (attn @ v).transpose(1, 2).reshape(bs, length, self.dim)  # (bs, nh, length, dk) ->  (bs, length, nh, dk) (bs, length, dim)
 
         result = self.fc(att)
         return result
