@@ -1,5 +1,5 @@
 from my_vit import *
-
+from cnn_model import *
 if __name__ == "__main__":
     classes = ['plane', 'car', 'bird', 'cat', 'deer',
                'dog', 'frog', 'horse', 'ship', 'truck']
@@ -26,19 +26,21 @@ if __name__ == "__main__":
     test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size, num_workers=6)
 
     # =================================== model =========================
-    net = MyVIT(image_size=32, patch_size=4, hidden_dim=92, mlp_dim=192, num_classes=10, num_layer=8, num_heads=1,
-                dropout=0.0, attention_dropout=0.0)
+    # net = MyVIT(image_size=32, patch_size=4, hidden_dim=92, mlp_dim=192, num_classes=10, num_layer=8, num_heads=1,
+    #             dropout=0.0, attention_dropout=0.0)
+    net=MyDepthWiseModule()
+    print(f"train_dataset.shape: {train_dataset[0][0].shape}")
     param_count = 0
     for name, param in net.named_parameters():
         param_count += param.numel()
-        print(name, param.shape)
+        # print(name, param.shape)
     print("net param count:{:,d}".format(param_count))
 
     # ======================================== loss function =======================================
     loss_fn = torch.nn.CrossEntropyLoss()
 
     # ========================================= optimizer =============================================
-    LR = 0.05
+    LR = 0.1
     MOMENTA = 0.9
     lr_schedular_step = 20
     lr_decay_gamma = 0.8

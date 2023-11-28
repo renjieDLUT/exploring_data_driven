@@ -25,6 +25,7 @@ cifar10_test_data = datasets.CIFAR10("./data/cifar10", False, transform=transfor
 for data in [mnist_train_data, fashion_train_data, cifar10_train_data]:
     fig: plt.Figure = plt.figure()
     idx_to_class = {v: k for k, v in data.class_to_idx.items()}
+    print(f"{data.__class__.__name__:>12}.shape: {data[0][0].shape}")
     for r in range(3):
         for c in range(3):
             x, y = data[r * 3 + c]

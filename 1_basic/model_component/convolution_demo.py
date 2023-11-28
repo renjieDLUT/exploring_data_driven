@@ -89,3 +89,4 @@ out = col2img(t3, 3, img_tensor.shape[-2], img_tensor.shape[-1])
 out_img = out.permute(1, 2, 0).to(torch.uint8)
 plt.imshow(out_img)
 plt.show()
+
