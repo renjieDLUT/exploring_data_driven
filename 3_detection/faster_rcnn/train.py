@@ -28,15 +28,30 @@ faster_rcnn = torchvision.models.detection.FasterRCNN(backbone, num_classes=21, 
 
 optimizer=torch.optim.SGD(faster_rcnn.parameters(),lr=0.01)
 
+device="cuda"
+backbone.to(device=device)
+faster_rcnn.to(device=device)
 
 epochs =5
 
 faster_rcnn.train()
 for epoch in range(epochs):
+    now=str()
+    iteration=0
     for x,y in dataloader:
-        print(type(x),y)
+        # print(type(x),y)
+
         loss=faster_rcnn(x,y)
-        for l in loss:
+        if now != "rpn":
+            l= loss["loss_objectness"] + loss["loss_rpn_box_reg"]
             l.backward()
+            now="rpn"
+        else:
+            l= loss["loss_classifier"] + loss["loss_box_reg"]
+            l.backward()
+            now="roi"
         optimizer.step()
         optimizer.zero_grad()
+        iteration+=1
+        if iteration%100==0:
+            print(f'loss_objectness:{loss["loss_objectness"]}')

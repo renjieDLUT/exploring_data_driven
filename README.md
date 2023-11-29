@@ -117,6 +117,9 @@
 > Swin ([file](/home/renjie/Desktop/paper/self-attention/\(Swin Transformer): Hierarchical Vision Transformer using Shifted Windows.pdf))
 
 ## 3. 目标检测、语义分割和实例分割
+- Faster RCNN
+> BoxCoder
+> Anchor
 
 ## 4. Lidar感知与预测模型
 

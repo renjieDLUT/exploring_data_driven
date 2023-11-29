@@ -42,15 +42,15 @@ class target_transforms:
             boxes.append([float(bndbox['xmin']), float(bndbox['ymin']), float(bndbox['xmax']), float(bndbox['ymax'])])
             label.append(class_to_index[obj['name']])
         res = {}
-        res['boxes'] = torch.tensor(boxes)
-        res['lables'] = torch.tensor(label).to(dtype=torch.int64)
+        res['boxes'] = torch.tensor(boxes).to(device="cuda")
+        res['labels'] = torch.tensor(label).to(dtype=torch.int64).to(device="cuda")
         return res
 
 def collate_fn(data):
     imgs=[]
     label=[]
     for sample in data:
-        imgs.append(sample[0])
+        imgs.append(sample[0].to(device="cuda"))
         label.append(sample[1])
     return imgs,label
 

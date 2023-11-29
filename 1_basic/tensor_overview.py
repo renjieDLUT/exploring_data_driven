@@ -37,6 +37,11 @@ print(f"last column:{data[:,-1]}")
 data[:, 1] = 0
 print(data)
 
+data=torch.range(0,99).reshape(4,-1)
+r=torch.tensor([[0],[1]])
+c=torch.range(0,9,dtype=torch.int).reshape(2,-1)
+print(data[r,c])
+
 # ------------------  joining tensor -----------------------------
 concat_data = torch.cat([data, data, data], dim=1)
 
@@ -74,3 +79,33 @@ y1 = y[:2]
 y1 = y1.sum()
 y1.backward()
 print(w.grad)
+
+# ------------------ min -------------------------
+print("*"*50)
+x=torch.randn(2,3)
+print(x.min(1))
+
+y=torch.randn(2,3)
+print(torch.max(x,y))
+print(torch.maximum(x,y))
+print(torch.maximum(torch.tensor([0.2]),x))
+
+# ------------------ topk -------------------------
+print("*"*50)
+x=torch.randn(2,100)
+print(x.topk(5))
+
+# ------------------ where -------------------------
+print("*"*50)
+x=torch.randn(4,6)
+print(torch.where(x>0))
+print(torch.nonzero(x>0,as_tuple=True))
+x=torch.randn(5)
+print(torch.where(x>0))
+
+# ------------------ zip -------------------------
+print("*"*50)
+x=torch.randn(2,10)
+y=torch.randn(2,20)
+for i,j in zip(x,y):
+    print(i.shape,j.shape)
