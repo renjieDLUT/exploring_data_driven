@@ -121,6 +121,7 @@
 - 单阶段与多阶段
 - [直接集合预测](https://yiyan.baidu.com/share/8qcVepAmC2)
 - [Metrics](https://blog.csdn.net/qq_38375203/article/details/125391658)
+- [benchmark](https://paperswithcode.com/sota/object-detection-on-coco)
 - [Faster RCNN](https://zhuanlan.zhihu.com/p/383167028)
 > BoxCoder
 > Anchor
