@@ -113,13 +113,22 @@
 > [mobilenet](https://blog.csdn.net/ManiacLook/article/details/123230896)
 
 - transformer网络
-> ViT ([file](/home/renjie/Desktop/paper/self-attention/\(VIT) An Image is Worth 16x16 Words, Transformers for Image Recognition at Scale.pdf))<br>
+> [ViT](https://arxiv.org/pdf/2010.11929.pdf) ([file](/home/renjie/Desktop/paper/self-attention/\(VIT) An Image is Worth 16x16 Words, Transformers for Image Recognition at Scale.pdf))<br>
 > Swin ([file](/home/renjie/Desktop/paper/self-attention/\(Swin Transformer): Hierarchical Vision Transformer using Shifted Windows.pdf))
 
 ## 3. 目标检测、语义分割和实例分割
-- Faster RCNN
+- [Anchor-based 和 anchor-free](https://blog.csdn.net/m0_61899108/article/details/122893551)
+- 单阶段与多阶段
+- [直接集合预测](https://yiyan.baidu.com/share/8qcVepAmC2)
+- [Metrics](https://blog.csdn.net/qq_38375203/article/details/125391658)
+- [Faster RCNN](https://zhuanlan.zhihu.com/p/383167028)
 > BoxCoder
 > Anchor
+> 正负样本均衡sampler
+> [非极大值抑制 NMS](https://zhuanlan.zhihu.com/p/587225859)
+
+- [DETR](https://arxiv.org/pdf/2005.12872.pdf)
+
 
 ## 4. Lidar感知与预测模型
 
