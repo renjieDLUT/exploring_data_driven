@@ -45,6 +45,8 @@ def worker(dataset: list, loop: int):
                 sl_cubic_path = generate_sl_line(s0, s, l0, l)
                 sample_path_points = get_discrete_point_by_sl_poly(sl_cubic_path, discrete_centric_line, s, s0,
                                                                    step_s=0.25)
+                if len(sample_path_points)<20:
+                    continue
                 x, y = [], []
                 for point in sample_path_points:
                     x.append(point[0])
@@ -86,8 +88,8 @@ def worker(dataset: list, loop: int):
         dataset.append(train_data)
 
 
-DATASET_SIZE = {"train": 50000, "test": 10000}
-batch_size=10000
+DATASET_SIZE = {"train": 5000, "test": 1000}
+batch_size=1000
 for dataset_name, dataset_size in DATASET_SIZE.items():
     batch_num=dataset_size//batch_size
     for i in range(batch_num):
