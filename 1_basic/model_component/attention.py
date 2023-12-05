@@ -7,6 +7,13 @@ transformer = nn.MultiheadAttention(256, 8, batch_first=True)
 y = transformer(x, x, x, need_weights=False)
 print(y[0].shape)
 
+q = torch.ones(1, 100, 256)
+k = torch.ones(1, 10, 100)
+v = torch.ones(1, 10, 100)
+transformer = nn.MultiheadAttention(256, num_heads=8, batch_first=True, kdim=100, vdim=100)
+y = transformer(q, k, v, need_weights=False)
+print("shape:", y[0].shape)
+
 
 class MySelfAttention(nn.Module):
     def __init__(self, dim, dk, dv):
@@ -65,7 +72,8 @@ class MyMultiHeadAttention(nn.Module):
 
         attn = (q @ k.transpose(-1, -2)) * self.scale  # (bs, nh, length, length)
         attn = attn.softmax(dim=-1)
-        att = (attn @ v).transpose(1, 2).reshape(bs, length, self.dim)  # (bs, nh, length, dk) ->  (bs, length, nh, dk) (bs, length, dim)
+        att = (attn @ v).transpose(1, 2).reshape(bs, length,
+                                                 self.dim)  # (bs, nh, length, dk) ->  (bs, length, nh, dk) (bs, length, dim)
 
         result = self.fc(att)
         return result
