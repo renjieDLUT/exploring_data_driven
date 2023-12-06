@@ -54,6 +54,16 @@ class DiscretePath:
     def max_length(self):
         return self.path_points[-1][0]
 
+    def get_points(self, max_length, num=100):
+        ret = []
+        for s in np.linspace(0.0, max_length, num):
+            if self.path_points[0][0] <= s <= self.path_points[-1][0]:
+                x, y = self.get_xy(s, 0.0)
+                ret.append([x, y])
+            else:
+                ret.append([0., 0.])
+        return ret
+
     def binary_find_lower_index(self, s):
         min_index = 0
         max_index = len(self.path_points) - 1
@@ -68,8 +78,8 @@ class DiscretePath:
         return min_index
 
     def get_xy(self, s, l):
-        assert self.path_points[0][0] <= s <= self.path_points[-1][0]
-        assert -self.__Max_Offset <= l <= self.__Max_Offset
+        # assert self.path_points[0][0] <= s <= self.path_points[-1][0]
+        # assert -self.__Max_Offset <= l <= self.__Max_Offset, f"l:{l} should be in range ({-self.__Max_Offset},{self.__Max_Offset})"
         lower_index = self.binary_find_lower_index(s)
         near_s, near_point = self.path_points[lower_index]
         near_x, near_y, near_heading = near_point
@@ -114,13 +124,15 @@ class DiscretePath:
                 cur_s += max(dist - max(w, h), 0.25)
         return False
 
-    def show(self, ax: plt.Axes):
+    def show(self, ax: plt.Axes, max_s=100.0,color="b"):
         x = []
         y = []
         for i in range(len(self.path_points)):
+            if self.path_points[i][0] > max_s:
+                break
             x.append(self.path_points[i][1][0])
             y.append(self.path_points[i][1][1])
-        ax.plot(x, y)
+        ax.plot(x, y,color=color)
         # plt.show()
 
 
@@ -141,17 +153,17 @@ def get_discrete_point_by_sl_poly(sl_poly: np.poly1d, ref_path: DiscretePath, ma
     return ret
 
 
-obs_max_num = 20
+obs_max_num = 30
 obs_l_range = (-20, 20)
 obs_heigth_range = (1.5, 6.0)
 obs_width_range = (1.5, 6.0)
 
 
-def generate_obs_along_path(path: DiscretePath):
+def generate_obs_along_path(path: DiscretePath, max_s=100.0):
     num_obs = random.randint(0, obs_max_num)
     ret = []
     for i in range(num_obs):
-        s = random.uniform(0.0, path.max_length())
+        s = random.uniform(0.0, max_s)
         l = random.uniform(*obs_l_range)
         c_x, c_y = path.get_xy(s, l)
         w = random.uniform(*obs_width_range)
@@ -164,7 +176,7 @@ def generate_obs_along_path(path: DiscretePath):
 def plot_obs(ax: plt.Axes, obs_list: list):
     for obs in obs_list:
         c_x, c_y, w, h, heading = obs
-        rec = plt.Rectangle((c_x - w / 2, c_y - h / 2), w, h, heading * 180 / math.pi,rotation_point='center')
+        rec = plt.Rectangle((c_x - w / 2, c_y - h / 2), w, h, heading * 180 / math.pi, rotation_point='center')
         ax.add_patch(rec)
 
 
@@ -193,10 +205,11 @@ if __name__ == "__main__":
 
         point = (5.5, 2.5)
         box = (50., 0., 16.0, 86.0, 0.5)
-        rec = plt.Rectangle((box[0] - box[2] / 2, box[1] - box[3] / 2), box[2], box[3], box[4] * 180 / math.pi,color="b",rotation_point='center')
+        rec = plt.Rectangle((box[0] - box[2] / 2, box[1] - box[3] / 2), box[2], box[3], box[4] * 180 / math.pi,
+                            color="b", rotation_point='center')
         ax.add_patch(rec)
         ax.plot(point[0], point[1], "ro")
         print(DiscretePath.is_in_box(point, box))
-        print("path.is_collision_with_obs(box):",path.is_collision_with_obs(box))
+        print("path.is_collision_with_obs(box):", path.is_collision_with_obs(box))
         plt.show()
-        print("path.is_collision_with_obs(box):",path.is_collision_with_obs(box))
+        print("path.is_collision_with_obs(box):", path.is_collision_with_obs(box))
