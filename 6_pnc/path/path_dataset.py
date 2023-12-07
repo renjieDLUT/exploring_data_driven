@@ -82,8 +82,10 @@ class PathDataset(Dataset):
                 (planned_discrete_sl_points - self.planned_discrete_sl_points_mean)
                 / self.planned_discrete_sl_points_std)
 
+        location=normed_planned_discrete_points[0,:]
+
         return normed_obstacle.astype(np.float32), normed_ref_line_points.astype(
-            np.float32), normed_planned_discrete_sl_points.astype(np.float32)
+            np.float32), normed_planned_discrete_points.astype(np.float32),location.astype(np.float32)
 
     def __len__(self):
         return len(self.data_info)
@@ -95,12 +97,14 @@ if __name__ == "__main__":
     file_path = './data/pnc_path/cubic_poly/train'
     path_dataset = PathDataset(file_path)
     for i in range(100):
-        normed_obstacle, normed_ref_line, normed_planned_discrete_sl_points = path_dataset[i]
-        print(type(normed_obstacle), type(normed_ref_line), type(normed_planned_discrete_sl_points))
+        normed_obstacle, normed_ref_line, normed_planned_discrete_points,normed_loc = path_dataset[i]
+        print(type(normed_obstacle), type(normed_ref_line), type(normed_planned_discrete_points),type(normed_loc))
+        # print(normed_loc*path_dataset.planned_discrete_points_std+path_dataset.planned_discrete_points_mean)
 
         obs = normed_obstacle * path_dataset.obstacles_std + path_dataset.obstacles_mean
         ref_line = normed_ref_line * path_dataset.ref_line_points_std + path_dataset.ref_line_points_mean
-        sl_points = normed_planned_discrete_sl_points * path_dataset.planned_discrete_sl_points_std + path_dataset.planned_discrete_sl_points_mean
+        planned_discrete_points = normed_planned_discrete_points * path_dataset.planned_discrete_points_std + path_dataset.planned_discrete_points_mean
+
         from generate_world import *
 
         fig, ax = plt.subplots()
@@ -108,14 +112,14 @@ if __name__ == "__main__":
         ref_line_x, ref_line_y = ref_line[:, 0], ref_line[:, 1]
         ref_line_path = DiscretePath(list(ref_line_x),list( ref_line_y))
         ref_line_path.show(ax)
-        xs = []
-        ys = []
-        for sl in sl_points:
-            x, y = ref_line_path.get_xy(sl[0], sl[1])
-            xs.append(x)
-            ys.append(y)
-        print(xs,ys)
-        planned_path = DiscretePath(xs, ys)
+        # xs = []
+        # ys = []
+        # for sl in sl_points:
+        #     x, y = ref_line_path.get_xy(sl[0], sl[1])
+        #     xs.append(x)
+        #     ys.append(y)
+        # print(xs,ys)
+        planned_path = DiscretePath(list(planned_discrete_points[:,0]), list(planned_discrete_points[:,1]))
         planned_path.show(ax,color="r")
         plt.show()
 

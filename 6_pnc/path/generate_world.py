@@ -124,15 +124,27 @@ class DiscretePath:
                 cur_s += max(dist - max(w, h), 0.25)
         return False
 
-    def show(self, ax: plt.Axes, max_s=100.0,color="b"):
+    def get_occ_status(self, obs_boxs, max_s, num):
+        assert max_s <= self.max_length()
+        occ_flag = []
+        for s in np.linspace(0.0, max_s, num):
+            point = self.get_xy(s, 0.0)
+            flag = False
+            for obs in obs_boxs:
+                flag = (flag or self.is_in_box(point, obs))
+            occ_flag.append(flag)
+        return occ_flag
+
+    def show(self, ax: plt.Axes, max_s=100.0, color="b"):
         x = []
         y = []
+        max_s = min(max_s, self.max_length())
         for i in range(len(self.path_points)):
             if self.path_points[i][0] > max_s:
                 break
             x.append(self.path_points[i][1][0])
             y.append(self.path_points[i][1][1])
-        ax.plot(x, y,color=color)
+        ax.plot(x, y, color=color)
         # plt.show()
 
 
@@ -153,7 +165,7 @@ def get_discrete_point_by_sl_poly(sl_poly: np.poly1d, ref_path: DiscretePath, ma
     return ret
 
 
-obs_max_num = 30
+obs_max_num = 20
 obs_l_range = (-20, 20)
 obs_heigth_range = (1.5, 6.0)
 obs_width_range = (1.5, 6.0)

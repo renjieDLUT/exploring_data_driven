@@ -26,12 +26,17 @@ def worker(dataset: list, loop: int):
         # mock obstacle
         obs_list = generate_obs_along_path(discrete_centric_line, max_length)
 
+        # occ_flag = discrete_centric_line.get_occ_status(obs_list, max_length, sample_num)
+
         # sample path
-        max_l = 5.0
+        max_l = 25.0
         # mock planning start point
-        s0, l0, dl0 = 0.0, 0.0, 0.0
-        sample_s = np.arange(max_length, s0, -2.5)
-        sample_left_l = [l for l in np.linspace(0.0, max_l, 21)]
+        # s0, l0, dl0 = 0.0, 0.0, 0.0
+        s0, l0, dl0 = random.uniform(0.0, 10.0), random.uniform(-10.0, 10.0), random.uniform(-0.1, 0.1)
+
+        # sample_s = np.arange(max_length, s0, -2.5)
+        sample_s = [max_length]
+        sample_left_l = [l for l in np.linspace(0.0, max_l, 101)]
         sample_l = [sample_left_l[0]]
         sample_left_l.remove(sample_left_l[0])
         for l in sample_left_l:
@@ -68,10 +73,14 @@ def worker(dataset: list, loop: int):
             if valid_max_s:
                 break
 
+        # for i, f in enumerate(occ_flag):
+        #     if f == True:
+        #         print([i, f], end=" ")
+
         # fig, ax = plt.subplots()
         # discrete_centric_line.show(ax)
         # if valid_discrete_path:
-        #     valid_discrete_path.show(ax,color='r')
+        #     valid_discrete_path.show(ax, max_s=valid_discrete_path.max_length(), color='r')
         # plot_obs(ax, obs_list)
         # print("valid_max_s: ", valid_max_s)
         # plt.show()
@@ -82,7 +91,7 @@ def worker(dataset: list, loop: int):
         #     print("no valid path!")
 
         planned_discrete_points = valid_discrete_path.get_points(max_length, sample_num) \
-            if valid_cubic_path else [[0.0, 0.0]] * sample_num
+            if valid_max_s else [[0.0, 0.0]] * sample_num
 
         planned_discrete_sl_points = []
         if valid_max_s:
@@ -104,6 +113,7 @@ def worker(dataset: list, loop: int):
                                          "max_s": valid_max_s if valid_max_s else None}
         train_data['planned_discrete_points'] = planned_discrete_points
         train_data['planned_discrete_sl_points'] = planned_discrete_sl_points
+        # train_data['occ_flag'] = occ_flag
 
         # with lock:
         dataset.append(train_data)
