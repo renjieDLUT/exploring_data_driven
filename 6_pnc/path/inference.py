@@ -5,7 +5,7 @@ from path_transformer import PathTransformer
 from generate_world import *
 import torch
 
-model_pt_path = './tmp/path_transformer_20.pt'
+model_pt_path = './tmp/path_transformer_60.pt'
 
 checkpoint = torch.load(model_pt_path)
 

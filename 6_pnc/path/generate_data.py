@@ -15,7 +15,7 @@ def worker(dataset: list, loop: int):
         # mock reference line
         ref_line_max_x = 100.0
         max_length = 100.0
-        sample_num = 201
+        sample_num = 21
         centric_line_cubic_poly = generate_cubic_poly_wrt_x()
         centric_line_coef = centric_line_cubic_poly.coef
 
@@ -91,19 +91,19 @@ def worker(dataset: list, loop: int):
         #     print("no valid path!")
 
         planned_discrete_points = valid_discrete_path.get_points(max_length, sample_num) \
-            if valid_max_s else [[0.0, 0.0]] * sample_num
+            if valid_max_s else [list(discrete_centric_line.get_xy(s0, l0))] * sample_num
 
         planned_discrete_sl_points = []
-        if valid_max_s:
-            for s in np.linspace(0.0, max_length, sample_num):
-                if s > valid_max_s:
-                    planned_discrete_sl_points.append(copy.deepcopy(planned_discrete_sl_points[-1]))
-                else:
-                    l = valid_cubic_path(s)
-                    dl = valid_cubic_path.deriv()(s)
-                    planned_discrete_sl_points.append([s, l, dl])
-        else:
-            planned_discrete_sl_points = [[0.0, 0.0, 0.0]] * sample_num
+        # if valid_max_s:
+        #     for s in np.linspace(0.0, max_length, sample_num):
+        #         if s > valid_max_s:
+        #             planned_discrete_sl_points.append(copy.deepcopy(planned_discrete_sl_points[-1]))
+        #         else:
+        #             l = valid_cubic_path(s)
+        #             dl = valid_cubic_path.deriv()(s)
+        #             planned_discrete_sl_points.append([s, l, dl])
+        # else:
+        #     planned_discrete_sl_points = [[0.0, 0.0, 0.0]] * sample_num
 
         train_data = {}
         train_data["centric_cubic_poly"] = {"coeff": list(centric_line_coef), "centric_line_max_x": ref_line_max_x}
@@ -119,8 +119,8 @@ def worker(dataset: list, loop: int):
         dataset.append(train_data)
 
 
-DATASET_SIZE = {"train": 10000, "test": 1000}
-batch_size = 1000
+DATASET_SIZE = {"train": 20000, "test": 3000}
+batch_size = 4000
 for dataset_name, dataset_size in DATASET_SIZE.items():
     batch_num = dataset_size // batch_size
     for i in range(batch_num):

@@ -102,6 +102,17 @@
 
 ### 1.3 [quickstart](https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html)
 
+### 1.4 Pytorch-Lightning
+- 特点
+> pytorch的抽象和包装 <br>
+> 可复用性强,易维护,逻辑清晰<br>
+> 
+- [`Python-Lightning`与`Lightning`的区别](https://yiyan.baidu.com/share/lpi9w2HHuc)
+
+### 1.5 [表示学习](https://yiyan.baidu.com/share/sVolX7fmlb)
+
+### 1.6 自监督
+
 ## 2. 分类任务
 - [ImageNet](https://paperswithcode.com/sota/image-classification-on-imagenet)
 - [卷积网络](https://blog.csdn.net/weixin_45897172/article/details/128330887)
@@ -132,6 +143,30 @@
 
 
 ## 4. Lidar感知与预测模型
+- prediction Metric
+> minADE<sub>k</sub> <br>
+> minFDE<sub>k</sub> <br>
+> b-minFDE<sub>k</sub> <br>
+> MR<sub>k</sub> <br>
+
+- [图神经网络GNN](https://zhuanlan.zhihu.com/p/626120563)
+> `dgl`与`Pytorch-Geometric`
+> 图卷积网络(GCN)
+> [Laplacian Matrix](https://en.wikipedia.org/wiki/Laplacian_matrix)
+
+- Rasterized
+> [CoverNet: Multimodal Behavior Prediction using Trajectory Sets](https://arxiv.org/pdf/1911.10298.pdf)
+
+- Vectorize
+> [Vectornet: Encoding hd maps and agent dynamics from vectorized representation](https://arxiv.org/pdf/2005.04259.pdf)
+
+- Transformer
+> [Wayformer: Motion Forecasting via Simple & Efficient Attention Networks](https://arxiv.org/pdf/2207.05844.pdf) <BR>
+> HiVT: Hierarchical Vector Transformer for Multi-Agent Motion Prediction <BR>
+> Query-Centric Trajectory Prediction <BR>
+
+- E-E
+> [ViP3D: End-to-end Visual Trajectory Prediction via 3D Agent Queries](https://arxiv.org/pdf/2208.01582.pdf)
 
 ## 5. BEV
 

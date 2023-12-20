@@ -13,7 +13,7 @@ dataloader = DataLoader(path_dataset, batch_size=1)
 test_dataloader = DataLoader(path_test_dataset, batch_size=1)
 
 model = PathTransformer()
-# model_pt_path = './tmp/path_transformer_20.pt'
+# model_pt_path = './tmp/path_transformer_10.pt'
 # checkpoint = torch.load(model_pt_path)
 # model = checkpoint['model']
 
@@ -25,7 +25,7 @@ for name, param in model.named_parameters():
     count += param.numel()
 print(f'total param number:{count:,d}')
 
-optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 lr_schedular = torch.optim.lr_scheduler.StepLR(optimizer, 10, 0.8)
 
 loss_fn = nn.L1Loss()
@@ -34,13 +34,13 @@ epoch = 1000
 for epo in range(epoch):
     sum_loss = 0.0
     iter_sum_loss = 0.0
-    for iter, (obs, ref_line, y, loc) in enumerate(dataloader):
-        obs = obs.to(device=device)
+    for iter, (obs,obs_points, ref_line, y, loc) in enumerate(dataloader):
+        obs_points = obs_points.to(device=device)
         ref_line = ref_line.to(device=device)
         loc = loc.to(device=device)
         y = y.to(device=device)
 
-        y_hat = model(obs, ref_line, loc)
+        y_hat = model(obs_points, ref_line, loc)
         l = loss_fn(y_hat, y)
         l.backward()
         optimizer.step()
@@ -60,8 +60,6 @@ for epo in range(epoch):
                     "ref_line_points_std": path_dataset.ref_line_points_std,
                     "planned_discrete_points_mean": path_dataset.planned_discrete_points_mean,
                     "planned_discrete_points_std": path_dataset.planned_discrete_points_std,
-                    "planned_discrete_sl_points_mean": path_dataset.planned_discrete_sl_points_mean,
-                    "planned_discrete_sl_points_std": path_dataset.planned_discrete_sl_points_std
                     }, model_pt_path)
 
     lr_schedular.step()
@@ -70,13 +68,13 @@ for epo in range(epoch):
     model.eval()
     sum_test_loss = 0.0
     with torch.no_grad():
-        for obs, ref_line, y, loc in test_dataloader:
-            obs = obs.to(device=device)
+        for obs,obs_points, ref_line, y, loc in test_dataloader:
+            obs_points = obs_points.to(device=device)
             ref_line = ref_line.to(device=device)
             loc = loc.to(device=device)
             y = y.to(device=device)
 
-            y_hat = model(obs, ref_line, loc)
+            y_hat = model(obs_points, ref_line, loc)
             l = loss_fn(y_hat, y)
             sum_test_loss += l.item()
 
