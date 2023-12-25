@@ -2,7 +2,7 @@ import pickle
 
 import torch
 
-file = "/home/renjie/renjie_ws/dataset/av2/test/processed/0a0af725-fbc3-41de-b969-3be718f694e2.pkl"
+file = "/home/renjie/renjie_ws/dataset/av2/test/processed/177ab5f7-cede-4c60-89ae-434c2b7f27fb.pkl"
 
 data = None
 with open(file, "rb+") as fb:
@@ -23,13 +23,18 @@ def read_data(data: dict):
 
 read_data(data)
 
-import pandas as pd
+from torch_geometric.data.hetero_data import HeteroData
 
-parquet_file_path = ("/home/renjie/renjie_ws/dataset/av2/test/raw/"
-                     "177ab5f7-cede-4c60-89ae-434c2b7f27fb/scenario_177ab5f7-cede-4c60-89ae-434c2b7f27fb.parquet")
-dataframe = pd.read_parquet(parquet_file_path)
-print(dataframe)
-print(dataframe.keys())
-print(dataframe.values)
-print(dataframe.iloc[0])
+heterodata=HeteroData(data)
+
+print(heterodata)
+# import pandas as pd
+#
+# parquet_file_path = ("/home/renjie/renjie_ws/dataset/av2/test/raw/"
+#                      "177ab5f7-cede-4c60-89ae-434c2b7f27fb/scenario_177ab5f7-cede-4c60-89ae-434c2b7f27fb.parquet")
+# dataframe = pd.read_parquet(parquet_file_path)
+# print(dataframe)
+# print(dataframe.keys())
+# print(dataframe.values)
+# print(dataframe.iloc[0])
 

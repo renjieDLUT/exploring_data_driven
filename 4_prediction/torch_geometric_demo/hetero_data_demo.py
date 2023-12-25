@@ -47,8 +47,8 @@ data['paper', 'has_topic', 'field_of_study'].edge_attr = [num_edges_topic, num_f
 
 from torch_geometric.datasets import OGB_MAG
 
-dataset=OGB_MAG('./data/ogb_mag')
-data=dataset[0]
+# dataset=OGB_MAG('./data/ogb_mag')
+# data=dataset[0]
 print(data)
 paper_node_data=data['paper']
 cites_node_data=data['paper','cites','paper']
@@ -56,4 +56,4 @@ cites_node_data=data['paper','paper']
 cites_node_data=data['cites']
 
 data['paper'].year=[10,50]
-print(data)
+print(data.x_dict)

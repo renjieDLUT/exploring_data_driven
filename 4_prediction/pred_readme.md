@@ -27,6 +27,71 @@ HeteroData:异构图
       `height`<br> `type`<br> `is_intersection`<br> `batch` `ptr`
     - 4 ~ 5: 存储两个边信息
 
+```markdown
+HeteroDataBatch(
+  scenario_id=[4],
+  city=[4],
+  agent={
+    num_nodes=205, 
+    av_index=[4], 
+    valid_mask=[205, 110],
+    predict_mask=[205, 110],
+    id=[4],
+    type=[205],
+    category=[205],
+    position=[205, 110, 3],
+    heading=[205, 110],
+    velocity=[205, 110, 3],
+    batch=[205],
+    ptr=[5]
+  },
+  map_polygon={
+    num_nodes=370,
+    position=[370, 3],
+    orientation=[370],
+    height=[370],
+    type=[370],
+    is_intersection=[370],
+    batch=[370],
+    ptr=[5]
+  },
+  map_point={
+    num_nodes=7183,
+    position=[7183, 3],
+    orientation=[7183],
+    magnitude=[7183],
+    height=[7183],
+    type=[7183],
+    side=[7183],
+    batch=[7183],
+    ptr=[5]
+  },
+  (map_point, to, map_polygon)={ edge_index=[2, 7183] },
+  (map_polygon, to, map_polygon)={
+    edge_index=[2, 1026],
+    type=[1026]
+  }
+)
+
+
+
+```
+验证集结果
+```markdown
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃      Validate metric      ┃       DataLoader 0        ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│         val_Brier         │    0.6212982535362244     │
+│          val_MR           │    0.15739555656909943    │
+│       val_cls_loss        │    0.9838679432868958     │
+│        val_minADE         │    0.7201171517372131     │
+│        val_minAHE         │    0.14290490746498108    │
+│        val_minFDE         │    1.2527447938919067     │
+│        val_minFHE         │    0.2175634801387787     │
+│   val_reg_loss_propose    │    -0.7386845946311951    │
+│    val_reg_loss_refine    │    -0.7346960306167603    │
+└───────────────────────────┴───────────────────────────┘
+```
 图网络的attention机制
 Fourier变换
 
