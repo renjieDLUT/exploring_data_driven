@@ -4,10 +4,10 @@ from torch_geometric.utils import scatter
 
 dataset = TUDataset('./data/', name='ENZYMES')
 print(len(dataset))
-print(dataset[0])
+print(dataset[0]['x'])
 print(dataset.num_classes)
 print(dataset.num_node_features)
-dataset = Planetoid(root='./data/', name='Cora')
+# dataset = Planetoid(root='./data/', name='Cora')
 data=dataset[0]
 
 loader=DataLoader(dataset,batch_size=32,shuffle=True)
